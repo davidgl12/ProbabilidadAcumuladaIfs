@@ -5,8 +5,10 @@
  */
 package convertidorprobabilidadaifs;
 
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -180,13 +182,12 @@ public class JFrame extends javax.swing.JFrame {
         limSup = limSupPasado + probabilidad;
         limInf = round(limInf, digitos);
         limSup = round(limSup, digitos);
-        codigo += "if(ran > "+limInf+"&& ran < "+limSup+") \n\t num = "+(num + i)+"; \n";
+        codigo += "if(ran > "+limInf+"&& ran < "+limSup+") \n\t num = "+(num)+"; \n";
         
         
         limSupPasado = limSup;
         jTextArea1.setText(codigo);
-        i++;
-        
+        num = num + i;
         jTextField1.setText("");
         jTextField1.requestFocusInWindow();
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -194,6 +195,7 @@ public class JFrame extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         num = Integer.parseInt(jTextField3.getText());
         i = Integer.parseInt(jTextField4.getText());
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jSpinner1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner1StateChanged
@@ -218,8 +220,10 @@ public class JFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jSpinner1StateChanged
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-//        Clipboard clipboard = Toolkit.getDefaultToolkit().beep();
-            Toolkit.getDefaultToolkit().beep();
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        StringSelection ss = new StringSelection(codigo);
+        clipboard.setContents(ss, null);
+        Toolkit.getDefaultToolkit().beep();        
     }//GEN-LAST:event_jButton3ActionPerformed
     
     public static double round(double value, int places) {
